@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+<title>The Greeting Game</title>
+</head>
+<body>
+<h1>The Greeting Game</h1>
+<input type="text" value="100" /> Huggers<br />
+<input type="text" value="100" /> Kissers<br />
+<input type="text" value="100" /> Handshakers<br />
+<input type="text" value="1" /> Friends per person<br />
+<input type="button" value="Next Day" onClick="next_day()" /><br />
+<hr />
+<script>
+var days = 0;
+function next_day() {
+  ++days;
+  document.body.innerHTML += "Day " + days + "<br />";
+}
+</script>
+</body>
+</html>
