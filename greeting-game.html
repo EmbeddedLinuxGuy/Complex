@@ -5,17 +5,47 @@
 </head>
 <body>
 <h1>The Greeting Game</h1>
-<input type="text" value="100" /> Huggers<br />
-<input type="text" value="100" /> Kissers<br />
-<input type="text" value="100" /> Handshakers<br />
+<input type="text" id="huggers" value="10" /> Huggers<br />
+<input type="text" id="kissers" value="10" /> Kissers<br />
+<input type="text" id="handshakers" value="10" /> Handshakers<br />
 <input type="text" value="1" /> Friends per person<br />
 <input type="button" value="Next Day" onClick="next_day()" /><br />
 <hr />
 <script>
 var days = 0;
+var state = new Array();
+
+var HUGGER = 0;
+var KISSER = 1;
+var HANDSHAKER = 2;
+
+function start() {
+    var n_huggers = parseInt(document.getElementById("huggers").value);
+    var n_kissers = parseInt(document.getElementById("kissers").value);
+    var n_handshakers = parseInt(document.getElementById("handshakers").value);
+
+    var j;
+    for (j=0; j < n_huggers; ++j) {
+	state[j] = HUGGER;
+    }
+    for (j=0; j < n_kissers; ++j) {
+	state[j+n_huggers] = KISSER;
+    }
+    for (j=0; j < n_handshakers; ++j) {
+	state[j+n_huggers+n_kissers] = HANDSHAKER;
+    }
+    document.body.innerHTML += String(n_huggers) + " huggers, " + String(n_kissers)
+        + " kissers, " + String(n_handshakers) + " handshakers.<br />";
+}
+
 function next_day() {
-  ++days;
-  document.body.innerHTML += "Day " + days + "<br />";
+    if (days == 0) { start(); }
+    ++days;
+    document.body.innerHTML += "Day " + days + "<br />";
+    for (var i=0; i < state.length; ++i) {
+	document.body.innerHTML += state[i];
+    }
+    document.body.innerHTML += "<br />";
 }
 </script>
 </body>
