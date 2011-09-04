@@ -44,7 +44,7 @@ function start() {
     }
 
     population = n_huggers + n_kissers + n_handshakers;
-    if ((population % 2) == 1) {
+    if ((friends === 1) && ((population % 2) === 1)) {
 	alert("You must have an even number of people for single-friend simulation.");
 	return -1;
     }
