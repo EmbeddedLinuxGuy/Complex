@@ -86,12 +86,18 @@ function next_day() {
     ++days;
     document.body.innerHTML += "Day " + days + "<br />";
 
+    var output = do_greetings();
+    document.body.innerHTML += output;
+}
+
+function do_greetings () {
+    var j;
+    var total_greetings = 0;
     var result = new Array(3);
     result[HUGGER] = 0;
     result[KISSER] = 0;
     result[HANDSHAKER] = 0;
 
-    var j;
     for (j=0; j < population; j+=2) {
 	var first = state[j];
 	var second = state[j+1];
@@ -109,16 +115,15 @@ function next_day() {
 	    }
 	}
 	result[outcome] += 2;
+	++total_greetings;
     }
+
     var output = "";
     for (j=0; j < 3; ++j) {
 	output += GREETING[j] + ": " + String(result[j]) + "<br />";
     }
-//    for (var i=0; i < state.length; ++i) {
-//	output += state[i];
-//    }
-//    output += "<br />";
-    document.body.innerHTML += output;
+    output += "Total greetings: " + String(total_greetings) + "<br />";
+    return output;
 }
 </script>
 </body>
