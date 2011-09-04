@@ -18,6 +18,14 @@ var state = new Array();
 var HUGGER = 0;
 var KISSER = 1;
 var HANDSHAKER = 2;
+var GREETING = new Array(3);
+GREETING[0] = "Hugger";
+GREETING[1] = "Kisser";
+GREETING[2] = "Handshaker";
+
+var matrix;
+var population;
+var pairs;
 
 function start() {
     var n_huggers = parseInt(document.getElementById("huggers").value);
@@ -36,16 +44,81 @@ function start() {
     }
     document.body.innerHTML += String(n_huggers) + " huggers, " + String(n_kissers)
         + " kissers, " + String(n_handshakers) + " handshakers.<br />";
+
+    population = n_huggers + n_kissers + n_handshakers;
+    matrix = new Array(population);
+    for (j=0; j < population; ++j) {
+	matrix[j] = new Array(population);
+	var i;
+	for (i=0; i < population; ++i) {
+	    matrix[j][i] = 0;
+	}
+    }
+
+    // randomize
+    var temp;
+    var randi;
+    for (j=0; j < population; ++j) {
+	randi = Math.floor(Math.random()*population);
+	temp = state[j];
+	state[j] = state[randi];
+	state[randi] = temp;
+    }
+
+    // generate pairings
+    pairs = new Array(population);
+    for (j=0; j < population; ++j) {
+	pairs[j] = j;
+    }
+
+    for (j=0; j < population; ++j) {
+	randi = Math.floor(Math.random()*population);
+	temp = pairs[j];
+	pairs[j] = pairs[randi];
+	pairs[randi] = temp;
+    }
+    for (j=0; j < population; ++j) {
+    }
 }
 
 function next_day() {
     if (days == 0) { start(); }
     ++days;
     document.body.innerHTML += "Day " + days + "<br />";
-    for (var i=0; i < state.length; ++i) {
-	document.body.innerHTML += state[i];
+
+    var result = new Array(3);
+    result[HUGGER] = 0;
+    result[KISSER] = 0;
+    result[HANDSHAKER] = 0;
+
+    var j;
+    for (j=0; j < population; j+=2) {
+	var first = state[j];
+	var second = state[j+1];
+	var outcome;
+	if (first === second) {
+	    outcome = first;
+	}
+	else {
+	    if (Math.random() < .5) {
+		outcome = first;
+		state[j+1] = first;
+	    } else {
+		outcome = second;
+		state[j] = second;
+	    }
+	}
+	result[outcome] += 2;
     }
-    document.body.innerHTML += "<br />";
+    var output = "";
+    for (j=0; j < 3; ++j) {
+	output += GREETING[j] + ": " + String(result[j]) + "<br />";
+    }
+//    for (var i=0; i < state.length; ++i) {
+//	output += state[i];
+//    }
+//    output += "<br />";
+    document.body.innerHTML += output;
 }
 </script>
 </body>
