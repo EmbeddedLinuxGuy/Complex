@@ -8,9 +8,13 @@
 <input type="text" id="huggers" value="10" /> Huggers<br />
 <input type="text" id="kissers" value="10" /> Kissers<br />
 <input type="text" id="handshakers" value="10" /> Handshakers<br />
-<input type="text" id="friends" value="1" /> Friends per person<br />
+<input type="radio" name="group1" id="single_friend"> One friend each<br />
+<input type="radio" name="group1" id="connected" checked> Fully connected<br />
+
 <input type="button" value="Next Day" onClick="next_day()" /><br />
 <hr />
+<div id="output">
+</div>
 <script>
 var days = 0;
 var state = new Array();
@@ -32,7 +36,18 @@ function start() {
     var n_huggers = parseInt(document.getElementById("huggers").value);
     var n_kissers = parseInt(document.getElementById("kissers").value);
     var n_handshakers = parseInt(document.getElementById("handshakers").value);
-    friends = parseInt(document.getElementById("friends").value);
+
+    if (document.getElementById("single_friend").value) {
+	friends = 1;
+    } else {
+	friends = 2;
+    }
+
+    population = n_huggers + n_kissers + n_handshakers;
+    if ((population % 2) == 1) {
+	alert("You must have an even number of people for single-friend simulation.");
+	return -1;
+    }
 
     var j;
     for (j=0; j < n_huggers; ++j) {
@@ -44,10 +59,7 @@ function start() {
     for (j=0; j < n_handshakers; ++j) {
 	state[j+n_huggers+n_kissers] = HANDSHAKER;
     }
-    document.body.innerHTML += String(n_huggers) + " huggers, " + String(n_kissers)
-        + " kissers, " + String(n_handshakers) + " handshakers.<br />";
 
-    population = n_huggers + n_kissers + n_handshakers;
     matrix = new Array(population);
     for (j=0; j < population; ++j) {
 	matrix[j] = new Array(population);
@@ -81,14 +93,18 @@ function start() {
     }
     for (j=0; j < population; ++j) {
     }
+
+    return 0;
 }
 
 function next_day() {
-    if (days == 0) { start(); }
+    if (days == 0) { if (start() < 0) { return; } }
     ++days;
     var output = "Day " + days;
     output += do_greetings();
-    document.body.innerHTML += output;
+    var o = document.getElementById("output").innerHTML;
+    var html = document.getElementById("output").innerHTML;
+    document.getElementById("output").innerHTML = output + html;
 }
 
 function do_greetings () {
