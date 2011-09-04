@@ -8,7 +8,7 @@
 <input type="text" id="huggers" value="10" /> Huggers<br />
 <input type="text" id="kissers" value="10" /> Kissers<br />
 <input type="text" id="handshakers" value="10" /> Handshakers<br />
-<input type="text" value="1" /> Friends per person<br />
+<input type="text" id="friends" value="1" /> Friends per person<br />
 <input type="button" value="Next Day" onClick="next_day()" /><br />
 <hr />
 <script>
@@ -26,11 +26,13 @@ GREETING[2] = "Handshaker";
 var matrix;
 var population;
 var pairs;
+var friends;
 
 function start() {
     var n_huggers = parseInt(document.getElementById("huggers").value);
     var n_kissers = parseInt(document.getElementById("kissers").value);
     var n_handshakers = parseInt(document.getElementById("handshakers").value);
+    friends = parseInt(document.getElementById("friends").value);
 
     var j;
     for (j=0; j < n_huggers; ++j) {
@@ -84,9 +86,8 @@ function start() {
 function next_day() {
     if (days == 0) { start(); }
     ++days;
-    document.body.innerHTML += "Day " + days + "<br />";
-
-    var output = do_greetings();
+    var output = "Day " + days;
+    output += do_greetings();
     document.body.innerHTML += output;
 }
 
@@ -98,9 +99,14 @@ function do_greetings () {
     result[KISSER] = 0;
     result[HANDSHAKER] = 0;
 
-    for (j=0; j < population; j+=2) {
+    var greeted = new Array();
+
+    for (j=0; j < population; j++) {
+	if (greeted[j]) { continue; }
+	var friend_i = get_friend(j);
 	var first = state[j];
-	var second = state[j+1];
+	var second = state[friend_i];
+
 	var outcome;
 	if (first === second) {
 	    outcome = first;
@@ -108,7 +114,7 @@ function do_greetings () {
 	else {
 	    if (Math.random() < .5) {
 		outcome = first;
-		state[j+1] = first;
+		state[friend_i] = first;
 	    } else {
 		outcome = second;
 		state[j] = second;
@@ -116,15 +122,27 @@ function do_greetings () {
 	}
 	result[outcome] += 2;
 	++total_greetings;
+	greeted[j] = 1;
+	greeted[friend_i] = 1;
     }
 
     var output = "";
     for (j=0; j < 3; ++j) {
-	output += GREETING[j] + ": " + String(result[j]) + "<br />";
+	output += ", " + GREETING[j] + ": " + String(result[j]);
     }
-    output += "Total greetings: " + String(total_greetings) + "<br />";
+    output += ". Total greetings: " + String(total_greetings) + "<br />";
     return output;
 }
+
+function get_friend(j) {
+    if (friends === 1) { return j+1; }
+    var friend = j;
+    while (friend === j) {
+	friend = Math.floor(Math.random()*population);
+    }
+    return friend;
+}
+
 </script>
 </body>
 </html>
