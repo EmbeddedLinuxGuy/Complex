@@ -120,12 +120,13 @@ function do_greetings () {
 		state[j] = second;
 	    }
 	}
-	result[outcome] += 2;
 	++total_greetings;
 	greeted[j] = 1;
 	greeted[friend_i] = 1;
     }
-
+    for (j=0; j < population; ++j) {
+	result[state[j]]++;
+    }
     var output = "";
     for (j=0; j < 3; ++j) {
 	output += ", " + GREETING[j] + ": " + String(result[j]);
