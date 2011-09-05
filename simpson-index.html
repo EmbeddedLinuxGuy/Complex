@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<title>Simpson Index</title>
+</head>
+<style>
+.square {
+  width: 50px;
+  height: 50px;
+  background-color: rgb(255,0,0);
+  border: 1px solid black;
+}
+</style>
+<body>
+<h1>Simpson Index</h1>
+<input type="button" value="New Color" onClick="new_color()" />
+<div id="colors">
+</div>
+<script>
+function new_color() {
+  document.getElementById("colors").innerHTML += "<div class=\"square\"></div>";
+}
+</script>
+</body>
+</html>
