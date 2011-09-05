@@ -24,15 +24,24 @@ var colors = [
     "#007fff", "#00ff7f", "#7f00ff", "#7fff00", "#ff007f", "#ff7f00",
     "#00007f", "#007f00", "#7f0000", "#007f7f", "#7f007f", "#7f7f00",
 ];
+
+function do_stuff () {
+    alert("Hi");
+}
+
 function new_color() {
-  document.getElementById("colors").innerHTML +=
-    "<div class=\"square\" id=\"zzz" + String(id) + "\"></div>";
-  // --
-  document.getElementById("zzz" + String(id)).style.backgroundColor = colors[id];
-  ++id;
-  if (id >= colors.length) {
-      document.getElementById("newcolor").disabled = true;
-  }
+    var id_label = "zzz" + String(id);
+    var s = document.createElement("div");
+    s.classList.add("square");
+    s.id = id_label;
+    s.style.backgroundColor = colors[id];
+    s.onclick = do_stuff;
+    document.getElementById("colors").appendChild(s);
+
+    ++id;
+    if (id >= colors.length) {
+	document.getElementById("newcolor").disabled = true;
+    }
 }
 </script>
 </body>
