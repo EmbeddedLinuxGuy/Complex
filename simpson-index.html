@@ -4,15 +4,24 @@
 <title>Simpson Index</title>
 </head>
 <style>
+body {
+    font-family: sans-serif;
+}
+.label {
+    width: 50px;
+    float: left;
+    text-align: center;
+}
 .square {
-  width: 50px;
-  height: 50px;
-  border: 1px solid black;
-  float: left;
+    width: 50px;
+    height: 50px;
+    border: 1px solid white;
+    float: left;
 }
 </style>
 <body>
 <h1>Simpson Index</h1>
+<h3 id="result">0</h3>
 <input id="newcolor" type="button" value="New Group" onClick="new_color()" />
 <div id="colors">
 </div>
@@ -26,24 +35,26 @@ var colors = [
     "#00007f", "#007f00", "#7f0000", "#007f7f", "#7f007f", "#7f7f00",
 ];
 
-function do_stuff () {
-    alert("Hi");
-}
+var count = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 function new_color() {
     var c = document.getElementById("colors");
     var id_label = "zzz" + String(id);
 
     var s = document.createElement("div");
-    s.classList.add("square");
+    s.classList.add("label");
     s.id = id_label;
     s.style.backgroundColor = "#ffffff";
+    s.style.color = colors[id];
+    s.innerHTML = "add";
     s.onclick = (function (d, i) {
 	return function() {
 	    var n = document.createElement("div");
 	    n.classList.add("square");
 	    n.style.backgroundColor = colors[i];
 	    d.appendChild(n);
+	    ++count[i];
+	    document.getElementById("result").innerHTML = count[i];
 	};
     })(s, id);
 
