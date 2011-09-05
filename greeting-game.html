@@ -48,6 +48,7 @@ function start() {
 	alert("You must have an even number of people for single-friend simulation.");
 	return -1;
     }
+    disable_controls();
 
     var j;
     for (j=0; j < n_huggers; ++j) {
@@ -158,6 +159,15 @@ function get_friend(j) {
 	friend = Math.floor(Math.random()*population);
     }
     return friend;
+}
+
+function disable_controls() {
+    document.getElementById("huggers").disabled = true;
+    document.getElementById("kissers").disabled = true;
+    document.getElementById("handshakers").disabled = true;
+
+    document.getElementById("single_friend").disabled = true;
+    document.getElementById("connected").disabled = true;
 }
 
 </script>
