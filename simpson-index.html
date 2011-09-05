@@ -8,11 +8,12 @@
   width: 50px;
   height: 50px;
   border: 1px solid black;
+  float: left;
 }
 </style>
 <body>
 <h1>Simpson Index</h1>
-<input id="newcolor" type="button" value="New Color" onClick="new_color()" />
+<input id="newcolor" type="button" value="New Group" onClick="new_color()" />
 <div id="colors">
 </div>
 <script>
@@ -30,13 +31,26 @@ function do_stuff () {
 }
 
 function new_color() {
+    var c = document.getElementById("colors");
     var id_label = "zzz" + String(id);
+
     var s = document.createElement("div");
     s.classList.add("square");
     s.id = id_label;
-    s.style.backgroundColor = colors[id];
-    s.onclick = do_stuff;
-    document.getElementById("colors").appendChild(s);
+    s.style.backgroundColor = "#ffffff";
+    s.onclick = (function (d, i) {
+	return function() {
+	    var n = document.createElement("div");
+	    n.classList.add("square");
+	    n.style.backgroundColor = colors[i];
+	    d.appendChild(n);
+	};
+    })(s, id);
+
+    var o = document.createElement("div");
+    o.style = "float:none";
+    o.appendChild(s);
+    c.appendChild(o);
 
     ++id;
     if (id >= colors.length) {
