@@ -1,0 +1,22 @@
+Understanding Complexity: Demos and Simulations
+-----------------------------------------------
+
+These JavaScript programs are meant to accompany "Understanding
+Complexity" from The Teaching Company, taught by Professor Scott
+E. Page.
+
+Lecture 3: The Interesting In-Between
+
+greeting-game.html tests how many steps it takes to reach
+equilibrium in a simple coordination game. In the trivial case of
+1-connectedness, stasis is always reached in a single step. In the
+case of complete connectedness, it may take considerably longer, but
+eventually two options disappear leaving only the third. The
+intermediate case is not yet implemented.
+
+Lecture 4: Why Different Is More
+
+simpson-index.html computes one diversity index of a population. After
+generating a number of squares of different colors, the Simpson Index
+shows the probability that two randomly square choices will be the
+same color.
