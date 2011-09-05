@@ -15,7 +15,7 @@ body {
 .square {
     width: 50px;
     height: 50px;
-    border: 1px solid white;
+    border: 1px solid black;
     float: left;
 }
 </style>
@@ -36,6 +36,7 @@ var colors = [
 ];
 
 var count = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var count_total = 0;
 
 function new_color() {
     var c = document.getElementById("colors");
@@ -46,7 +47,10 @@ function new_color() {
     s.id = id_label;
     s.style.backgroundColor = "#ffffff";
     s.style.color = colors[id];
-    s.innerHTML = "add";
+    var t = document.createElement("div");
+    t.style.border = "1px solid " + colors[id];
+    t.innerHTML = "add"
+    s.appendChild(t);
     s.onclick = (function (d, i) {
 	return function() {
 	    var n = document.createElement("div");
@@ -54,7 +58,8 @@ function new_color() {
 	    n.style.backgroundColor = colors[i];
 	    d.appendChild(n);
 	    ++count[i];
-	    document.getElementById("result").innerHTML = count[i];
+	    ++count_total;
+	    update_index();
 	};
     })(s, id);
 
@@ -68,6 +73,18 @@ function new_color() {
 	document.getElementById("newcolor").disabled = true;
     }
 }
+
+function update_index() {
+    var j;
+    var total = 0;
+    for (j=0; j < count.length; ++j) {
+	total += (count[j]*count[j]) / (count_total*count_total);
+	console.log("Count[" + j + "]: " + count[j]);
+    }
+    console.log("Count total: " + count_total);
+    document.getElementById("result").innerHTML = String(1 / total);
+}
+
 </script>
 </body>
 </html>
