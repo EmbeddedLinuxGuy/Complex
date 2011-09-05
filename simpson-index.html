@@ -7,18 +7,32 @@
 .square {
   width: 50px;
   height: 50px;
-  background-color: rgb(255,0,0);
   border: 1px solid black;
 }
 </style>
 <body>
 <h1>Simpson Index</h1>
-<input type="button" value="New Color" onClick="new_color()" />
+<input id="newcolor" type="button" value="New Color" onClick="new_color()" />
 <div id="colors">
 </div>
 <script>
+var id = 0;
+
+var colors = [
+    "#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff",
+    "#00007f", "#007f00", "#7f0000", "#007f7f", "#7f007f", "#7f7f00",
+    "#007fff", "#00ff7f", "#7f00ff", "#7fff00", "#ff007f", "#ff7f00"
+];
+alert(colors.length);
 function new_color() {
-  document.getElementById("colors").innerHTML += "<div class=\"square\"></div>";
+  document.getElementById("colors").innerHTML +=
+    "<div class=\"square\" id=\"zzz" + String(id) + "\"></div>";
+  // --
+  document.getElementById("zzz" + String(id)).style.backgroundColor = colors[id];
+  ++id;
+  if (id >= colors.length) {
+      document.getElementById("newcolor").disabled = true;
+  }
 }
 </script>
 </body>
